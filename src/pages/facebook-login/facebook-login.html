@@ -1,0 +1,8 @@
+<ion-buttons end>
+  <button ion-button icon-only class="disable-hover button bar-button bar-button-default" *ngIf="!authenticationService.IsConnected" (click)="onFacebookLoginClick()">
+	    <ion-icon name="logo-facebook"></ion-icon>
+	</button>
+  <button ion-button icon-only class="disable-hover button bar-button bar-button-default" *ngIf="authenticationService.IsConnected">
+    <ion-icon name="contact"></ion-icon>
+  </button>
+</ion-buttons>

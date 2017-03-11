@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Proposal</ion-title>
+    <facebook-login></facebook-login>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col width-80>
+        <h6>{{proposal.game?.homeTeam}} @ {{proposal.game?.awayTeam}}</h6>
+      </ion-col>
+      <ion-col col-offset-20 text-right>
+        {{proposal.game?.time}}
+      </ion-col>
+    </ion-row>
+    <ion-row padding-top padding-bottom>
+      {{proposal.proposedBy?.firstname}} wants action on {{proposal.pick}} {{proposal.line}}
+    </ion-row>
+    <ion-row>
+      <ion-item no-lines>
+        <ion-range min="1" max="{{proposal.maxUnits}}" [(ngModel)]="proposal.units" color="primary">
+          <ion-label range-left>1</ion-label>
+          <ion-label range-right>{{proposal.maxUnits}}</ion-label>
+        </ion-range>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+  <button ion-button full outline (click)="accept(proposal)">
+    Accept {{proposal.units}} Units
+  </button>
+</ion-content>

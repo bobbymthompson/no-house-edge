@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>NCAAB</ion-title>
+    <facebook-login></facebook-login>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-card ion-item no-padding *ngFor="let game of games" (click)="itemTapped($event, game)">
+      <ion-card-content no-padding>
+        <!--{{game.homeTeam}} @ {{game.awayTeam}}
+        <p item-left>
+          {{game.homeTeam}} {{game.line1}}
+        </p>
+        <p item-right>{{game.time}}</p>-->
+        <ion-grid no-padding>
+          <ion-row>
+            <!--<ion-col width-90 text-wrap>{{game.homeTeam}} @ {{game.awayTeam}}</ion-col>
+            <ion-col width-10>{{game.time}}</ion-col>-->
+            <ion-col width-80 class="game-header">
+              {{game.homeTeam}} @ {{game.awayTeam}}
+            </ion-col>
+            <ion-col col-offset-20 text-right>
+              {{game.time}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col width-60>{{game.homeTeam}}</ion-col>
+            <ion-col width-20>{{game.line}}</ion-col>
+            <ion-col width-20 text-right>O/U {{game.overUnder}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

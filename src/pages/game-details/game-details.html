@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!proposal">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{proposal.game.awayTeam}} @ {{proposal.game.homeTeam}}</ion-title>
+    <facebook-login></facebook-login>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list radio-group [(ngModel)]="proposal.proposedByPick">
+    <h3 padding-left>Lines</h3>
+    <ion-item>
+      <ion-label>{{proposal.game.favorite}} {{proposal.game.line}}</ion-label>
+      <ion-radio value="Favorite"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{proposal.game.underdog}} {{proposal.game.underdogLine}}</ion-label>
+      <ion-radio value="Underdog"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Over {{proposal.game.overUnder}}</ion-label>
+      <ion-radio value="Over"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Under {{proposal.game.overUnder}}</ion-label>
+      <ion-radio value="Under"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <h3 padding-left>Propose</h3>
+    <ion-item *ngFor="let selectable of selectableUsers">
+      <ion-label>{{selectable.user.name}}</ion-label>
+      <ion-toggle [(ngModel)]="selectable.selected"></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <h3 padding-left>Units</h3>
+  <div padding>
+    <ion-segment [(ngModel)]="proposal.units">
+      <ion-segment-button value="1">
+        1
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        2
+      </ion-segment-button>
+      <ion-segment-button value="3">
+        3
+      </ion-segment-button>
+      <ion-segment-button value="4">
+        4
+      </ion-segment-button>
+      <ion-segment-button value="5">
+        5
+      </ion-segment-button>
+      <ion-segment-button value="10">
+        10
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div padding-top padding-bottom>
+    <button ion-button full outline (click)="propose(proposal)" *ngIf="authenticationService.IsConnected">Propose</button>
+    <button ion-button full outline (click)="authenticationService.Login()" *ngIf="!authenticationService.IsConnected">Log in to propose a bet</button>
+  </div>
+</ion-content>
