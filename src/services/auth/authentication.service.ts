@@ -78,25 +78,31 @@ export class AuthenticationService {
               role: 'user'
             }
 
-            self.http.get(self.config.get('endPoint') + '/users?email=' + user.email).map(res => res.json()).subscribe(data => {
+            self.http.get(self.config.get('endPoint') + '/users?email=' + user.email)
+              .map(res => res.json())
+              .catch(error => {
 
-              console.log('User: %s', JSON.stringify(data));
+                if (error.status === 404) {
+                  console.log('No user found in database');
 
-              if (data.length == 0) {
-                console.log('No user found in database');
+                  self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
+                    console.log('User created in database: %s', JSON.stringify(newUser));
 
-                self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
-                  console.log('User created in database: %s', JSON.stringify(newUser));
+                    self.storage.set("user", newUser);
+                    self.User = new User().deserialize(newUser);
+                  });
+                }
+                else {
+                  return Observable.throw(error.json().error || 'Server error');
+                }
+              })
+              .subscribe(data => {
 
-                  self.storage.set("user", newUser);
-                  self.User = new User().deserialize(newUser);
-                });
-              } else {
+                console.log('User: %s', JSON.stringify(data));
                 self.storage.set("user", data);
                 self.User = new User().deserialize(data);
-              }
 
-            });
+              });
 
           });
         }
