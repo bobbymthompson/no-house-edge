@@ -4,12 +4,20 @@
   "homepage": "http://no-house-edge.herokuapp.com/",
   "private": true,
   "scripts": {
+    "start": "node server.ts",
+    "dev": "nodemon -i \"*.test.js\" server.ts",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
+    "body-parser": "^1.16.1",
+    "cors": "^2.8.0",
+    "del": "2.2.0",
+    "express": "^4.15.2",
+    "method-override": "^2.3.6",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "@angular/common": "2.2.1",
@@ -29,9 +37,10 @@
     "rxjs": "5.0.0-beta.12",
     "sw-toolbox": "3.4.0",
     "zone.js": "0.6.26",
-    "typescript": "2.0.9"
+    "typescript": "2.0.9",
+    "nodemon": "^1.10.2"
   },
-  "description": "no-house-edge: An Ionic project",
+  "description": "No House Edge",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
