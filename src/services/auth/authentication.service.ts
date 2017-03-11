@@ -78,14 +78,14 @@ export class AuthenticationService {
               role: 'user'
             }
 
-            self.http.get(this.config.get('endPoint') + '/users?email=' + user.email).map(res => res.json()).subscribe(data => {
+            self.http.get(self.config.get('endPoint') + '/users?email=' + user.email).map(res => res.json()).subscribe(data => {
 
               console.log('User: %s', JSON.stringify(data));
 
               if (data.length == 0) {
                 console.log('No user found in database');
 
-                self.http.post(this.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
+                self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
                   console.log('User created in database: %s', JSON.stringify(newUser));
 
                   self.storage.set("user", newUser);
