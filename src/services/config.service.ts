@@ -17,6 +17,7 @@ export class Config {
         var environment:string;
         var data = {};
         environment = window.location.hostname;
+        console.log('Environment: %s', environment);
         switch (environment) {
             case'localhost':
                 data = {
@@ -25,7 +26,7 @@ export class Config {
                 break;
              case 'https://no-house-edge.herokuapp.com':
                 data = {
-                    endPoint: 'https://no-house-edge-api.herokuapp.com'
+                    endPoint: 'https://no-house-edge-api.herokuapp.com/api'
                 };
                 break;
 

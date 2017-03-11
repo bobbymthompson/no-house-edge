@@ -33,8 +33,5 @@ app.use(function (req, res, next) {
   next();
 });
 
-console.log('Starting server');
-
-// listen (start app with node server.js) ======================================
 app.listen(app.get('port'));
 console.log("App listening on port " + app.get('port'));
