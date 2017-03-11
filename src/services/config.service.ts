@@ -24,12 +24,11 @@ export class Config {
                     endPoint: 'http://localhost:9000'
                 };
                 break;
-             case 'https://no-house-edge.herokuapp.com':
+             case 'no-house-edge.herokuapp.com':
                 data = {
                     endPoint: 'https://no-house-edge-api.herokuapp.com/api'
                 };
                 break;
-
             default:
                 data = {
                     endPoint: 'http://localhost:9000'
