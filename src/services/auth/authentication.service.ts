@@ -127,7 +127,11 @@ export class AuthenticationService {
 
   getUser(email: string): Promise<User> {
     return this.http.get(this.config.get('endPoint') + '/users?email=' + email)
-      .map(response => new User().deserialize(response.json()))
+      .map(response => {
+
+        console.log('User from response (' + response.status + '): ' + JSON.stringify(response.json()));
+        return new User().deserialize(response.json())
+      })
       .toPromise();
   }
 }
