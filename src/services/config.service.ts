@@ -26,7 +26,7 @@ export class Config {
                 break;
              case 'no-house-edge.herokuapp.com':
                 data = {
-                    endPoint: 'https://no-house-edge-api.herokuapp.com/api'
+                    endPoint: 'https://no-house-edge-api.herokuapp.com'
                 };
                 break;
             default:
