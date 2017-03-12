@@ -13,6 +13,7 @@ export class Proposal implements ISerializable<Proposal> {
     pick: string;
 
     constructor() {
+        this.units = '1';
         this.maxUnits = '1';
         this.proposedByPick = 'Favorite';
     }
