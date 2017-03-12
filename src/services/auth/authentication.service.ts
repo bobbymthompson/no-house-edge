@@ -80,11 +80,14 @@ export class AuthenticationService {
 
             self.http.get(self.config.get('endPoint') + '/users?email=' + user.email)
               .map(res => res.json())
-              .catch(error => {
+              .catch(error => Observable.throw(error.json().error || 'Server error'))
+              .subscribe(data => {
 
-                if (error.status === 404) {
-                  console.log('No user found in database');
+                console.log('User: %s', JSON.stringify(data));
 
+                if (!data) {
+
+                  console.log('Creating new user');
                   self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
                     console.log('User created in database: %s', JSON.stringify(newUser));
 
@@ -93,15 +96,9 @@ export class AuthenticationService {
                   });
                 }
                 else {
-                  return Observable.throw(error.json().error || 'Server error');
+                  self.storage.set("user", data);
+                  self.User = new User().deserialize(data);
                 }
-              })
-              .subscribe(data => {
-
-                console.log('User: %s', JSON.stringify(data));
-                self.storage.set("user", data);
-                self.User = new User().deserialize(data);
-
               });
 
           });
