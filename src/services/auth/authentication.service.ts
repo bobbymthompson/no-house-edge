@@ -78,28 +78,33 @@ export class AuthenticationService {
               role: 'user'
             }
 
-            self.http.get(self.config.get('endPoint') + '/users?email=' + user.email)
-              .map(res => res.json())
-              .catch(error => Observable.throw(error.json().error || 'Server error'))
-              .subscribe(data => {
+            self.getUser(user.email).then((retrievedUser) => {
 
-                console.log('User: %s', JSON.stringify(data));
+              console.log('User: %s', JSON.stringify(retrievedUser));
 
-                if (!data) {
+              if (!retrievedUser || !retrievedUser.name) {
 
-                  console.log('Creating new user');
-                  self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
-                    console.log('User created in database: %s', JSON.stringify(newUser));
+                console.log('Creating new user');
+                self.http.post(self.config.get('endPoint') + '/users', user).map(res => res.json()).subscribe(newUser => {
+                  console.log('User created in database: %s', JSON.stringify(newUser));
 
-                    self.storage.set("user", newUser);
-                    self.User = new User().deserialize(newUser);
-                  });
-                }
-                else {
-                  self.storage.set("user", data);
-                  self.User = new User().deserialize(data);
-                }
-              });
+                  self.storage.set("user", newUser);
+                  self.User = new User().deserialize(newUser);
+                });
+              }
+              else {
+                self.storage.set("user", retrievedUser);
+                self.User = new User().deserialize(retrievedUser);
+              }
+            });
+
+            // self.http.get(self.config.get('endPoint') + '/users?email=' + user.email)
+            //   .map(res => res.json())
+            //   .catch(error => Observable.throw(error.json().error || 'Server error'))
+            //   .subscribe(data => {
+
+
+            //   });
 
           });
         }
@@ -119,4 +124,10 @@ export class AuthenticationService {
       console.log(JSON.stringify(resp));
     }
   };
+
+  getUser(email: string): Promise<User> {
+    return this.http.get(this.config.get('endPoint') + '/users?email=' + email)
+      .map(response => new User().deserialize(response.json()))
+      .toPromise();
+  }
 }
