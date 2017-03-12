@@ -55,10 +55,13 @@ export class GameDetailsPage {
 
 				proposal.proposedTo = selectable.user;
 
+				console.log('Proposed To: %s', JSON.stringify(selectable.user));
+				console.log('Proposed By: %s', JSON.stringify(this.authenticationService.User));
+
 				let newProp = {
 					game: proposal.game,
-					proposedTo: proposal.proposedTo.id,
-					proposedBy: proposal.proposedBy.id,
+					proposedTo: selectable.user.id,
+					proposedBy: this.authenticationService.User.id,
 					units: proposal.units,
 					proposedByPick: proposal.proposedByPick
 				}
