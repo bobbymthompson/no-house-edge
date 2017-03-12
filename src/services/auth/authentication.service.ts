@@ -130,7 +130,17 @@ export class AuthenticationService {
       .map(response => {
 
         console.log('User from response (' + response.status + '): ' + JSON.stringify(response.json()));
-        return new User().deserialize(response.json())
+        
+        var users = response.json();
+        if (users.length == 1) {
+          return new User().deserialize(users[0]);
+        }
+        else if (users.length == 0) {
+          return null;
+        }
+        else {
+          throw 'More than 1 user with the specified email (' + email + ') was found.';
+        }
       })
       .toPromise();
   }
